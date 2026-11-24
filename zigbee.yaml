@@ -2,10 +2,7 @@ esphome:
   name: nrf52-zigbee-combo
 
 external_components:
-  - source:
-      type: git
-      url: https://github.com
-      ref: nrf52_zigbee
+  - source: github://tomaszduda23/esphome@nrf52_zigbee
     components: [zigbee]
 
 nrf52:
