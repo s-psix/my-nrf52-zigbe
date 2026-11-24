@@ -23,16 +23,18 @@ light:
     name: "Тестовая лампа"
     output: led_out
 
-# 2. ПЕРЕКЛЮЧАТЕЛЬ / КНОПКА (замыкание P0.11 на GND)
+# 2. ПЕРЕКЛЮЧАТЕЛЬ / КНОПКА (замыкание пина 111 / P1.11 на GND)
 binary_sensor:
   - platform: gpio
     name: "Кнопка на плате"
     pin:
       number: P1.11
-      mode: INPUT_PULLUP
+      mode:
+        input: true
+        pullup: true
       inverted: true
 
-# 3. ДАТЧИК (аналоговый АЦП на P0.02)
+# 3. ДАТЧИК (аналоговый АЦП на пине 002 / P0.02)
 sensor:
   - platform: adc
     name: "Аналоговый датчик"
