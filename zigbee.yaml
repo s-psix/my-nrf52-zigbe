@@ -10,62 +10,54 @@ nrf52:
   bootloader: adafruit_nrf52_sd140_v6
 
 zigbee:
+  router: true
 
-# Включаем питание 3.3 В на выходе VCC гребёнки платы (особенность nice!nano)
+# Включаем питание 3.3 В на выходе VCC гребёнки платы (не считается за Zigbee endpoint)
 output:
   - platform: gpio
     id: vcc_power
     pin: P0.13
 
-# --- 4 ВЫХОДА (Реле / Лампочки / Нагрузка) ---
+# --- 3 ВЫХОДА (Реле / Лампочки) ---
 switch:
   - platform: gpio
-    name: "Выход 1 (Синий LED)"
+    name: "Out1_LED"
     pin: P0.15
   - platform: gpio
-    name: "Выход 2 (Пин 006)"
+    name: "Out2_P006"
     pin: P0.06
   - platform: gpio
-    name: "Выход 3 (Пин 008)"
+    name: "Out3_P008"
     pin: P0.08
-  - platform: gpio
-    name: "Выход 4 (Пин 017)"
-    pin: P0.17
 
-# --- 4 ВХОДА (Кнопки / Герконы / Датчики открытия) ---
+# --- 3 ВХОДА (Кнопки / Герконы / Переключатели) ---
 binary_sensor:
   - platform: gpio
-    name: "Вход 1 (Пин 111)"
+    name: "In1_P111"
     pin:
       number: P1.11
       mode: { input: true, pullup: true }
       inverted: true
   - platform: gpio
-    name: "Вход 2 (Пин 113)"
+    name: "In2_P113"
     pin:
       number: P1.13
       mode: { input: true, pullup: true }
       inverted: true
   - platform: gpio
-    name: "Вход 3 (Пин 115)"
+    name: "In3_P115"
     pin:
       number: P1.15
-      mode: { input: true, pullup: true }
-      inverted: true
-  - platform: gpio
-    name: "Вход 4 (Пин 106)"
-    pin:
-      number: P1.06
       mode: { input: true, pullup: true }
       inverted: true
 
 # --- 2 АНАЛОГОВЫХ ДАТЧИКА (АЦП) ---
 sensor:
   - platform: adc
-    name: "АЦП 1 (Пин 002)"
+    name: "ADC1_P002"
     pin: P0.02
     update_interval: 30s
   - platform: adc
-    name: "АЦП 2 (Пин 029)"
+    name: "ADC2_P029"
     pin: P0.29
     update_interval: 30s
