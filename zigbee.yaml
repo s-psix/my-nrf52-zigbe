@@ -1,33 +1,71 @@
 esphome:
   name: nrf52-zigbee-combo
+  on_boot:
+    priority: 800
+    then:
+      - output.turn_on: vcc_power
 
 nrf52:
-  board: nice_nano_v2
+  board: adafruit_itsybitsy_nrf52840
   bootloader: adafruit_nrf52_sd140_v6
 
-# Встроенный официальный компонент Zigbee (ESPHome 2026)
 zigbee:
 
-# 1. РЕЛЕ / ЛАМПОЧКА (встроенный синий светодиод P0.15 — управляется голосом через Алису)
+# Включаем питание 3.3 В на выходе VCC гребёнки платы (особенность nice!nano)
+output:
+  - platform: gpio
+    id: vcc_power
+    pin: P0.13
+
+# --- 4 ВЫХОДА (Реле / Лампочки / Нагрузка) ---
 switch:
   - platform: gpio
-    name: "Тестовая лампа"
+    name: "Выход 1 (Синий LED)"
     pin: P0.15
+  - platform: gpio
+    name: "Выход 2 (Пин 006)"
+    pin: P0.06
+  - platform: gpio
+    name: "Выход 3 (Пин 008)"
+    pin: P0.08
+  - platform: gpio
+    name: "Выход 4 (Пин 017)"
+    pin: P0.17
 
-# 2. ПЕРЕКЛЮЧАТЕЛЬ / КНОПКА (замыкание пина 111 / P1.11 на GND)
+# --- 4 ВХОДА (Кнопки / Герконы / Датчики открытия) ---
 binary_sensor:
   - platform: gpio
-    name: "Кнопка на плате"
+    name: "Вход 1 (Пин 111)"
     pin:
       number: P1.11
-      mode:
-        input: true
-        pullup: true
+      mode: { input: true, pullup: true }
+      inverted: true
+  - platform: gpio
+    name: "Вход 2 (Пин 113)"
+    pin:
+      number: P1.13
+      mode: { input: true, pullup: true }
+      inverted: true
+  - platform: gpio
+    name: "Вход 3 (Пин 115)"
+    pin:
+      number: P1.15
+      mode: { input: true, pullup: true }
+      inverted: true
+  - platform: gpio
+    name: "Вход 4 (Пин 106)"
+    pin:
+      number: P1.06
+      mode: { input: true, pullup: true }
       inverted: true
 
-# 3. ДАТЧИК (аналоговый АЦП на пине 002 / P0.02)
+# --- 2 АНАЛОГОВЫХ ДАТЧИКА (АЦП) ---
 sensor:
   - platform: adc
-    name: "Аналоговый датчик"
+    name: "АЦП 1 (Пин 002)"
     pin: P0.02
+    update_interval: 30s
+  - platform: adc
+    name: "АЦП 2 (Пин 029)"
+    pin: P0.29
     update_interval: 30s
