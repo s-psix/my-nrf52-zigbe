@@ -1,0 +1,25 @@
+board: nice_nano_v2
+
+general:
+  device_type: router
+  factory_reset_pin: P0.17
+
+devices:
+  # 1. ЛАМПОЧКА / РЕЛЕ (управляется голосом через , встроенный синий светодиод P0.15)
+  - type: on_off
+    id: test_light
+    pin: P0.15
+    inverted: false
+
+  # 2. ПЕРЕКЛЮЧАТЕЛЬ / КНОПКА (замыкание пина P0.11 на GND)
+  - type: binary_input
+    id: wall_switch
+    pin: P0.11
+    pull: up
+    inverted: true
+
+  # 3. ДАТЧИК (например, АЦП на пине P0.02)
+  - type: adc
+    id: analog_sensor
+    pin: P0.02
+    interval: 30s

@@ -1,0 +1,29 @@
+name: Build Zigbee Firmware
+
+on:
+  push:
+    paths:
+      - 'zigbee.yaml'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ffenix113/zigbee_home:latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build UF2 firmware
+        run: |
+                    (command -v zigbee_home || command -v zigbee) --config zigbee.yaml firmware build
+
+      - name: Upload UF2 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nice-nano-zigbee-uf2
+          path: |
+            **/*.uf2
