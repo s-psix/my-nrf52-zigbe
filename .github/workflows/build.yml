@@ -20,11 +20,12 @@ jobs:
       - name: Build UF2 firmware
         run: |
           esphome compile zigbee.yaml
-          find . -name "*.uf2" -o -name "*.hex"
+          mkdir -p out
+          find .esphome -name "*.uf2" -exec cp {} out/ \;
+          ls -la out/
 
       - name: Upload UF2 artifact
         uses: actions/upload-artifact@v4
         with:
           name: nice-nano-zigbee-uf2
-          path: |
-            **/*.uf2
+          path: out/*.uf2
