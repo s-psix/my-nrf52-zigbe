@@ -1,27 +1,18 @@
 esphome:
   name: nrf52-zigbee-combo
 
-external_components:
-  - source: github://tomaszduda23/esphome@nrf52_zigbee
-    components: [zigbee]
-
 nrf52:
   board: nice_nano_v2
   bootloader: adafruit_nrf52_sd140_v6
 
+# Встроенный официальный компонент Zigbee (ESPHome 2026)
 zigbee:
-  id: zb
 
-# 1. ЛАМПОЧКА (встроенный синий светодиод P0.15)
-output:
+# 1. РЕЛЕ / ЛАМПОЧКА (встроенный синий светодиод P0.15 — управляется голосом через Алису)
+switch:
   - platform: gpio
-    id: led_out
-    pin: P0.15
-
-light:
-  - platform: binary
     name: "Тестовая лампа"
-    output: led_out
+    pin: P0.15
 
 # 2. ПЕРЕКЛЮЧАТЕЛЬ / КНОПКА (замыкание пина 111 / P1.11 на GND)
 binary_sensor:
