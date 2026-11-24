@@ -28,7 +28,7 @@ binary_sensor:
   - platform: gpio
     name: "Кнопка на плате"
     pin:
-      number: P0.11
+      number: P1.11
       mode: INPUT_PULLUP
       inverted: true
 
